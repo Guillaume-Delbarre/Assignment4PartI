@@ -124,7 +124,7 @@ namespace Assignment4PartI.Tests
             var products = service.GetProductByCategory(1);
             Assert.Equal(12, products.Count);
             Assert.Equal("Chai", products.First().Name);
-            //Assert.Equal("Beverages", products.First().CategoryName);
+            Assert.Equal("Beverages", products.First().CategoryName);
             Assert.Equal("Lakkalikööri", products.Last().Name);
         }
 
@@ -134,8 +134,8 @@ namespace Assignment4PartI.Tests
             var service = new DataService();
             var products = service.GetProductByName("em");
             Assert.Equal(4, products.Count);
-            //Assert.Equal("NuNuCa Nuß-Nougat-Creme", products.First().ProductName);
-            //Assert.Equal("Flotemysost", products.Last().ProductName);
+            Assert.Equal("NuNuCa Nuß-Nougat-Creme", products.First().ProductName);
+            Assert.Equal("Flotemysost", products.Last().ProductName);
         }
 
         /* orders */

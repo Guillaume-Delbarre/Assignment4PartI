@@ -45,22 +45,42 @@ namespace Assignment4PartI
                 Name = name,
                 Description = description
             };
+            ctx.Categories.Add(category);
+            ctx.SaveChanges();
             return category;
         }
 
         public bool DeleteCategory(int id)
         {
-            return true;
+            var ctx = new NorthwindContext();
+            Category category = ctx.Categories.Find(id);
+            if (category == null)
+                return false;
+            else
+            {
+                ctx.Categories.Remove(category);
+                return ctx.SaveChanges() > 0;
+            }
         }
 
         public bool UpdateCategory(int id, string name, string description)
         {
-            return true;
+            var ctx = new NorthwindContext();
+            Category category = ctx.Categories.Find(id);
+            if (category == null)
+                return false;
+            else
+            {
+                category.Name = name;
+                category.Description = description;
+                return ctx.SaveChanges() > 0;
+            }
         }
 
         public Category GetCategory(int id)
         {
-            return new Category();
+            var ctx = new NorthwindContext();
+            return ctx.Categories.Find(id);
         }
 
         public IList<Category> GetCategories()
@@ -71,19 +91,21 @@ namespace Assignment4PartI
 
         public Product GetProduct(int id)
         {
-            return new Product();
+            var ctx = new NorthwindContext();
+            var product = ctx.Products.Find(id);
+            return product;
         }
 
         public IList<Product> GetProductByCategory(int categoryId)
         {
             var ctx = new NorthwindContext();
-            return ctx.Products.ToList();
+            return ctx.Products.Where<Product>(x => x.CategoryId == categoryId).ToList();
         }
 
         public IList<Product> GetProductByName(string name)
         {
             var ctx = new NorthwindContext();
-            return ctx.Products.ToList();
+            return ctx.Products.Where<Product>(x => x.Name.Contains(name)).ToList();
         }
 
         public IList<Product> GetProducts()
@@ -94,22 +116,26 @@ namespace Assignment4PartI
 
         public Order GetOrder(int id)
         {
-            return new Order();
+            var ctx = new NorthwindContext();
+            return ctx.Orders.Find(id);
         }
 
         public IList<Order> GetOrders()
         {
-            return new List<Order>();
+            var ctx = new NorthwindContext();
+            return ctx.Orders.ToList();
         }
 
         public IList<OrderDetails> GetOrderDetailsByOrderId(int orderId)
         {
-            return new List<OrderDetails>();
+            var ctx = new NorthwindContext();
+            return ctx.OrderDetails.Where<OrderDetails>(x => x.OrderId == orderId).ToList();
         }
 
         public IList<OrderDetails> GetOrderDetailsByProductId(int productId)
         {
-            return new List<OrderDetails>();
+            var ctx = new NorthwindContext();
+            return ctx.OrderDetails.Where<OrderDetails>(x => x.ProductId == productId).ToList();
         }
     }
 }
