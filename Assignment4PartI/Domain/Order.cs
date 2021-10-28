@@ -1,9 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Assignment4PartI.Domain
 {
@@ -12,9 +8,10 @@ namespace Assignment4PartI.Domain
         public int Id { get; set; }
         public DateTime Date { get; set; }
         public DateTime Required { get; set; }
-        [InverseProperty("Order")]
-        public virtual IList<OrderDetails> OrderDetails { get; set; }
+        public DateTime Shipped { get; set; }
+        public int Freight { get; set; }
         public string ShipName { get; set; }
         public string ShipCity { get; set; }
+        public IList<OrderDetails> OrderDetails { get; set; }
     }
 }

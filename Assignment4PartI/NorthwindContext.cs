@@ -34,27 +34,24 @@ namespace Assignment4PartI
             modelBuilder.Entity<Category>().Property(x => x.Description).HasColumnName("description");
 
             modelBuilder.Entity<Product>().ToTable("products");
-            modelBuilder.Entity<Product>().HasOne(x => x.Category);
             modelBuilder.Entity<Product>().Property(x => x.Id).HasColumnName("productid");
             modelBuilder.Entity<Product>().Property(x => x.Name).HasColumnName("productname");
-            modelBuilder.Entity<Product>().Property(x => x.SupplierId).HasColumnName("supplierid");
             modelBuilder.Entity<Product>().Property(x => x.CategoryId).HasColumnName("categoryid");
             modelBuilder.Entity<Product>().Property(x => x.QuantityPerUnit).HasColumnName("quantityperunit");
             modelBuilder.Entity<Product>().Property(x => x.UnitPrice).HasColumnName("unitprice");
             modelBuilder.Entity<Product>().Property(x => x.UnitsInStock).HasColumnName("unitsinstock");
 
             modelBuilder.Entity<Order>().ToTable("orders");
-            modelBuilder.Entity<Order>().HasMany(x => x.OrderDetails);
             modelBuilder.Entity<Order>().Property(x => x.Id).HasColumnName("orderid");
             modelBuilder.Entity<Order>().Property(x => x.Date).HasColumnName("orderdate");
             modelBuilder.Entity<Order>().Property(x => x.Required).HasColumnName("requireddate");
+            modelBuilder.Entity<Order>().Property(x => x.Shipped).HasColumnName("shippeddate");
+            modelBuilder.Entity<Order>().Property(x => x.Freight).HasColumnName("freight");
             modelBuilder.Entity<Order>().Property(x => x.ShipCity).HasColumnName("shipname");
             modelBuilder.Entity<Order>().Property(x => x.ShipName).HasColumnName("shipcity");
 
             modelBuilder.Entity<OrderDetails>().ToTable("orderdetails");
             modelBuilder.Entity<OrderDetails>().HasKey(x => new { x.OrderId, x.ProductId });
-            modelBuilder.Entity<OrderDetails>().HasOne(x => x.Product);
-            modelBuilder.Entity<OrderDetails>().HasOne(x => x.Order);
             modelBuilder.Entity<OrderDetails>().Property(x => x.OrderId).HasColumnName("orderid");
             modelBuilder.Entity<OrderDetails>().Property(x => x.ProductId).HasColumnName("productid");
             modelBuilder.Entity<OrderDetails>().Property(x => x.UnitPrice).HasColumnName("unitprice");
