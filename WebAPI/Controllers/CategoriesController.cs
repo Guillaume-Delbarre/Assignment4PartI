@@ -40,7 +40,7 @@ namespace WebAPI.Controllers
                 return NotFound();
             }
 
-            CategoryUrlViewModel model = GetCategoryUrlViewModel(category);
+            CategoryViewModel model = GetCategoryViewModel(category);
 
             return Ok(model);
         }
@@ -51,23 +51,23 @@ namespace WebAPI.Controllers
 
             var category = _dataService.CreateCategory(model.Name, model.Description);
 
-            return Created("", GetCategoryUrlViewModel(category));
+            return Created(GetUrl(category), GetCategoryViewModel(category));
 
         }
 
-        [HttpPut("{id}", Name = nameof(UpdateCategory))]
+        [HttpPut("{id}")]
         public IActionResult UpdateCategory(int id, CategoryViewModel model)
         {
             if (id != model.Id)
                 return NotFound();
             var category = _dataService.GetCategory(id);
             if (_dataService.UpdateCategory(id, model.Name, model.Description))
-                return Ok(GetCategoryViewModel(category));
+                return Ok();
             else
                 return NotFound();
         }
 
-        [HttpDelete("{id}", Name = nameof(DeleteCategory))]
+        [HttpDelete("{id}")]
         public IActionResult DeleteCategory(int id)
         {
             var category = _dataService.GetCategory(id);
@@ -77,11 +77,16 @@ namespace WebAPI.Controllers
             else
                 return NotFound();
         }
+
+        private string GetUrl(Category category)
+        {
+            return _linkGenerator.GetUriByName(HttpContext, nameof(GetCategory), new { category.Id });
+        }
         private CategoryUrlViewModel GetCategoryUrlViewModel(Category category)
         {
             return new CategoryUrlViewModel
             {
-                Url = _linkGenerator.GetUriByName(HttpContext, nameof(GetCategory), new { category.Id }),
+                Url = GetUrl(category),
                 Name = category.Name,
                 Desc = category.Description
             };
